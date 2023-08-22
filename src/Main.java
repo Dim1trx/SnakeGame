@@ -16,5 +16,6 @@ public class Main {
             SnakeGame game = new SnakeGame(boardWidth, boardHeight);
             frame.add(game);
             frame.pack();
+            game.requestFocus();
     }
 }
