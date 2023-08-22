@@ -86,6 +86,16 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
             Tile snakePart = snakeBody.get(i);
             g.fillRect(snakePart.x * tilesSize, snakePart.y * tilesSize, tilesSize, tilesSize);
         }
+
+        //Score
+        g.setFont(new Font("Arial", Font.PLAIN, 16));
+        if(gameOver){
+            g.setColor(Color.RED);
+            g.drawString("Game Over: " + String.valueOf(snakeBody.size()), tilesSize - 16, tilesSize);
+        }
+        else{
+            g.drawString("Score: " + String.valueOf(snakeBody.size()), tilesSize - 16, tilesSize);
+        }
     }
     public void move(){
         if(collision(snakeHead, food)) {
