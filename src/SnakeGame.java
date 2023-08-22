@@ -32,6 +32,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
     int velocityX;
     int velocityY;
 
+    boolean gameOver = false;
+
     public SnakeGame(int width, int height){
         this.boardHeight = height;
         this.boardWidth = width;
@@ -89,6 +91,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
         if(collision(snakeHead, food)) {
             snakeBody.add(new Tile(food.x, food.y));
             placeFood();
+
         }
 
         //Snake body
@@ -108,6 +111,21 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
         //SnakeHead
         snakeHead.x += velocityX;
         snakeHead.y += velocityY;
+
+        //game over conditions
+
+        for (int i = 0; i < snakeBody.size(); i++) {
+            Tile snakePart = snakeBody.get(i);
+
+            if(collision(snakeHead, snakePart)){
+                gameOver = true;
+            }
+        }
+
+        if(snakeHead.x * tilesSize < 0 || snakeHead.x * tilesSize > boardWidth ||
+                snakeHead.y * tilesSize < 0 || snakeHead.y * tilesSize > boardHeight){
+            gameOver = true;
+        }
     }
 
     public boolean collision(Tile tile1, Tile tile2){
@@ -118,6 +136,9 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener{
     public void actionPerformed(ActionEvent e){
         move();
         repaint();
+        if(gameOver){
+            gameLoop.stop();
+        }
     }
     @Override
     public void keyPressed(KeyEvent e) {
